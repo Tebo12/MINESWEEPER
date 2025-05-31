@@ -36,9 +36,9 @@ class LoginView(View):
             if user is not None:
                 login(request, user)
                 return redirect('home')  # Redirect to your home page
-            message = 'Login failed!'
+            message = 'Не удалось войти'
             return render(request, self.template_name, context={'form': form, 'message': message})
-        return render(request, self.template_name, context={'form': form, 'message': 'Invalid form'})
+        return render(request, self.template_name, context={'form': form, 'message': 'Неверная форма'})
 
 class RegisterView(CreateView):
     form_class = RegisterForm
