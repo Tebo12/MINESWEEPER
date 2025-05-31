@@ -19,9 +19,52 @@ def homePageView(request):
 def play(request):
     a = 10
     b = 10
-    field = [[0] * a for i in range(b)]
-
     bombs = 5
+
+    titles_to_win = a*b-bombs
+
+    opened_titles = request.session.get('opened_titles', 0)
+    field = request.session.get('field', field_generation(a, b, bombs))
+    player_view = request.session.get('player_view', player_view_generation(a, b))
+    boom = False
+
+    if restart := request.GET.get('restart'):
+        field = field_generation(a, b, bombs)
+        player_view = player_view_generation(a, b)
+    else:
+        if x := request.GET.get('x'):
+            if y := request.GET.get('y'):
+                if rightClick := request.GET.get('rightClick'):
+                    if player_view[int(x)][int(y)] == 'X':
+                        player_view[int(x)][int(y)] = ''
+                    else:
+                        player_view[int(x)][int(y)] = 'X'
+                else:
+                    player_view[int(x)][int(y)] = field[int(x)][int(y)]
+                    opened_titles += 1
+                    if field[int(x)][int(y)] == -1:
+                        boom = True
+                        field = field_generation(a, b, bombs)
+                        player_view = player_view_generation(a, b)
+
+    request.session['field'] = field
+    request.session['player_view'] = player_view
+    request.session['opened_titles'] = opened_titles
+    """
+        for l in player_view:
+        print(l)
+    """
+    if opened_titles == titles_to_win:
+        redirect('/')
+    return render(request, 'minesweeper.html', {'player_view': player_view, 'boom': boom})
+
+
+def player_view_generation(a, b):
+    return [[''] * a for i in range(b)]
+
+
+def field_generation(a, b, bombs):
+    field = [[0] * a for i in range(b)]
 
     for i in range(bombs):
         while True:
@@ -35,12 +78,8 @@ def play(request):
         for j in range(b):
             if field[i][j] == -1:
                 place_numbers(field, a, b, i, j)
-    """
-        for l in field:
-        print(l)
-    """
-    player_view = [[''] * a for i in range(b)]
-    return render(request, 'minesweeper.html', {'player_view': player_view})
+
+    return field
 
 
 def place_numbers(field, a, b, i, j):
