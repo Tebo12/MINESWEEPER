@@ -3,4 +3,13 @@ from django.http import HttpResponse
 
 # Create your views here.
 def homePageView(request):
-    return HttpResponse('hello world')
+    return render(request, 'base.html')
+
+def play(request):
+    return render(request, 'minesweeper.html')
+
+def login_view(request):
+    return render(request, 'login.html')
+
+def records(request):
+    return render(request, 'records.html')

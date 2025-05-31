@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4f9fa8c-550b-4e22-b120-be75bd4b511a" name="Changes" comment="" />
+    <list default="true" id="f4f9fa8c-550b-4e22-b120-be75bd4b511a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/minesweeper/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/minesweeper/templates/minesweeper.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/minesweeper/templates/records.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/minesweeper/templates/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/minesweeper/templates/stats.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minesweeper/minesweeper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/minesweeper/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minesweeper/minesweeper_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/minesweeper_app/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minesweeper/minesweeper_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/minesweeper_app/views.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +26,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -29,9 +42,16 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Глеб/Documents/GitHub/MINESWEEPER"
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/79000/Desktop/Новая папка (11)/pythondjangoproject11/MINESWEEPER"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\79000\Desktop\Новая папка (11)\pythondjangoproject11\MINESWEEPER\minesweeper" />
+      <recent name="C:\Users\79000\Desktop\Новая папка (11)\pythondjangoproject11\MINESWEEPER\minesweeper\minesweeper_app\templates" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
