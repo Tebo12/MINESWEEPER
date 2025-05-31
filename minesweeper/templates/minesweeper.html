@@ -7,15 +7,51 @@
 {% block background_style %}
     body {
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-
         url('{% static "images/play.jpg" %}') no-repeat center center fixed;
         background-size: cover;
     }
 {% endblock %}
 
-
 {% block content %}
+<div class="container mt-5">
+    <div class="minesweeper-board">
+        {% for row in player_view %}
+        <div class="minesweeper-row">
+            {% for cell in row %}
+            <div class="minesweeper-cell">
+                {{ cell }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
+<style>
+    .minesweeper-board {
+        display: inline-block;
+        border: 2px solid #333;
+        background-color: #bbb;
+    }
 
+    .minesweeper-row {
+        display: flex;
+    }
 
+    .minesweeper-cell {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #888;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #ccc;
+    }
+
+    .minesweeper-cell:hover {
+        background-color: #ddd;
+    }
+</style>
 {% endblock %}
