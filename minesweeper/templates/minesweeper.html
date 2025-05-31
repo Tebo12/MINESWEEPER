@@ -18,7 +18,10 @@
         {% for row in player_view %}
         <div class="minesweeper-row">
             {% for cell in row %}
-            <div class="minesweeper-cell">
+            <div id="cell-{{ forloop.parentloop.counter0 }}-{{ forloop.counter0 }}"
+                 class="minesweeper-cell"
+                 data-x="{{ forloop.parentloop.counter0 }}"
+                 data-y="{{ forloop.counter0 }}">
                 {{ cell }}
             </div>
             {% endfor %}
@@ -54,4 +57,17 @@
         background-color: #ddd;
     }
 </style>
+
+<script>
+    // Пример обработки клика по клетке с использованием ID
+    document.querySelectorAll('.minesweeper-cell').forEach(cell => {
+        cell.addEventListener('click', function() {
+            const cellId = this.id;
+            const x = this.dataset.x;
+            const y = this.dataset.y;
+            console.log(`Кликнута клетка с ID: ${cellId}, координаты: (${x}, ${y})`);
+            // Здесь можно добавить логику обработки клика
+        });
+    });
+</script>
 {% endblock %}
