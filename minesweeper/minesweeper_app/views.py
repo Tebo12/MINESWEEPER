@@ -27,10 +27,13 @@ def play(request):
     field = request.session.get('field', field_generation(a, b, bombs))
     player_view = request.session.get('player_view', player_view_generation(a, b))
     boom = False
+    win = False
 
     if restart := request.GET.get('restart'):
         field = field_generation(a, b, bombs)
         player_view = player_view_generation(a, b)
+        opened_titles = 0
+
     else:
         if x := request.GET.get('x'):
             if y := request.GET.get('y'):
@@ -38,10 +41,12 @@ def play(request):
                     if player_view[int(x)][int(y)] == 'X':
                         player_view[int(x)][int(y)] = ''
                     else:
-                        player_view[int(x)][int(y)] = 'X'
+                        if player_view[int(x)][int(y)] == '':
+                            player_view[int(x)][int(y)] = 'X'
                 else:
-                    player_view[int(x)][int(y)] = field[int(x)][int(y)]
-                    opened_titles += 1
+                    if player_view[int(x)][int(y)] == '':
+                        opened_titles += 1
+                        player_view[int(x)][int(y)] = field[int(x)][int(y)]
                     if field[int(x)][int(y)] == -1:
                         boom = True
                         field = field_generation(a, b, bombs)
@@ -54,9 +59,12 @@ def play(request):
         for l in player_view:
         print(l)
     """
-    if opened_titles == titles_to_win:
-        redirect('/')
-    return render(request, 'minesweeper.html', {'player_view': player_view, 'boom': boom})
+    if opened_titles >= titles_to_win and not boom:
+        win = True
+
+    print(titles_to_win)
+    print(opened_titles)
+    return render(request, 'minesweeper.html', {'player_view': player_view, 'boom': boom, 'win':win})
 
 
 def player_view_generation(a, b):

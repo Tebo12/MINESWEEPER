@@ -16,9 +16,16 @@
 <div class="container mt-5">
     <div class="minesweeper-board">
         {% if boom %}
-            <div class="game-over-container">
-                <div class="defeat-message">
+            <div class="game-container">
+                <div class="game-message">
                     <h2>Ты взорвался!</h2>
+                    <button class="restart-button" onclick="restartGame()">Играть снова</button>
+                </div>
+            </div>
+        {% elif win%}
+            <div class="game-container">
+                <div class="game-message">
+                    <h2>Победа</h2>
                     <button class="restart-button" onclick="restartGame()">Играть снова</button>
                 </div>
             </div>
@@ -70,14 +77,14 @@
         background-color: #ddd;
     }
 
-    .game-over-container {
+    .game-container {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 60vh;
     }
 
-     .defeat-message {
+     .game-message {
         text-align: center;
         padding: 30px;
         background-color: rgba(0, 0, 0, 0.8);
