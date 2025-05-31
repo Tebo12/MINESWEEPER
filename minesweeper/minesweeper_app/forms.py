@@ -17,15 +17,6 @@ class RegisterForm(UserCreationForm):
             raise ValidationError("Пароли не совпадают")
         return cleaned_data
 
-class LoginForm(AuthenticationForm):
-    username = forms.CharField(
-        label="Логин",
-        widget=forms.TextInput(attrs={'autofocus': True, 'placeholder': 'Логин'})
-    )
-    password = forms.CharField(
-        label="Пароль",
-        widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'})
-    )
-    def clean(self):
-        cleaned_data = super().clean()
-        return cleaned_data
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput, label='логин')
+    password = forms.CharField(widget=forms.PasswordInput, label='пароль')
