@@ -39,7 +39,7 @@ def play(request):
         for l in field:
         print(l)
     """
-    player_view = [['#'] * a for i in range(b)]
+    player_view = [[''] * a for i in range(b)]
     return render(request, 'minesweeper.html', {'player_view': player_view})
 
 
