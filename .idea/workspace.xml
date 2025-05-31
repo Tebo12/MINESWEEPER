@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4f9fa8c-550b-4e22-b120-be75bd4b511a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/minesweeper/templates/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/minesweeper/templates/minesweeper.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/minesweeper/templates/records.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/minesweeper/templates/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/minesweeper/templates/stats.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/minesweeper/minesweeper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/minesweeper/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minesweeper/minesweeper_app/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/minesweeper_app/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/minesweeper/minesweeper_app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/minesweeper_app/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minesweeper/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minesweeper/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/minesweeper/templates/register.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

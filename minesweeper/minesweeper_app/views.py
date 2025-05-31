@@ -13,3 +13,6 @@ def login_view(request):
 
 def records(request):
     return render(request, 'records.html')
+
+def register(request):
+    return render(request, 'register.html')
