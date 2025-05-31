@@ -31,53 +31,125 @@
             <div class="stat-label">Процент побед</div>
         </div>
     </div>
+
+    <div class="logout-container">
+        <a href="{% url '' %}" class="logout-btn" onclick="return confirm('Вы уверены, что хотите выйти?')">
+            Выйти из аккаунта
+        </a>
+    </div>
 </div>
 
 <style>
     .stats-container {
         max-width: 800px;
         margin: 30px auto;
-        padding: 20px;
+        padding: 30px;
         background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .stats-container h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 30px;
+        font-size: 2rem;
     }
 
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        gap: 25px;
         margin-top: 30px;
     }
 
     .stat-item {
         background: rgba(0, 0, 0, 0.3);
-        padding: 20px;
-        border-radius: 8px;
+        padding: 25px 20px;
+        border-radius: 10px;
         text-align: center;
-        transition: transform 0.3s;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .stat-item:hover {
         transform: translateY(-5px);
         background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
     .stat-value {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
         font-weight: bold;
         color: #4CAF50;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .stat-label {
-        font-size: 1rem;
+        font-size: 1.1rem;
         color: #ddd;
+        letter-spacing: 0.5px;
     }
 
-    @media (max-width: 600px) {
+    .logout-container {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .logout-btn {
+        display: inline-block;
+        padding: 14px 35px;
+        background-color: #f44336;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: none;
+        cursor: pointer;
+    }
+
+    .logout-btn:hover {
+        background-color: #d32f2f;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .logout-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
         .stats-grid {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            padding: 20px 15px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+        }
+
+        .logout-btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-container {
+            padding: 20px 15px;
         }
     }
 </style>
