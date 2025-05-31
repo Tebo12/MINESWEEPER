@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
             margin: 0;
@@ -17,7 +19,7 @@
                 rgba(0, 0, 0, 0.3),
                 rgba(0, 0, 0, 0.3)
               ),
-              url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTExzjLyWffyKTWBTR8_aRqa0yebtPZt1NXJqFtocEPn81bDETmzvvEfsX8K4Ok6JcKhDU&usqp=CAU.gif') no-repeat center center fixed;
+              url('{% static "images/base.jpg" %}') no-repeat center center fixed;
             background-size: cover;
             color: white;
         }

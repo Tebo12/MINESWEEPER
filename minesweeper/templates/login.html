@@ -3,6 +3,7 @@
 {% block header_title %}Вход в систему{% endblock %}
 
 {% block content %}
+{% load static %}
 <div class="auth-container">
     <h2>Вход в аккаунт</h2>
 
@@ -18,6 +19,14 @@
 </div>
 
 <style>
+    {% block background_style %}
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+
+        url('{% static "images/login.jpg" %}') no-repeat center center fixed;
+        background-size: cover;
+    }
+    {% endblock %}
 
     .auth-container {
         max-width: 400px;

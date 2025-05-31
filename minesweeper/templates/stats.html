@@ -2,6 +2,8 @@
 
 {% block header_title %}Статистика{% endblock %}
 
+{% load static %}
+
 {% block content %}
 <div class="stats-container">
     <h2>Ваша статистика</h2>
@@ -40,6 +42,15 @@
 </div>
 
 <style>
+    {% block background_style %}
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+
+            url('{% static "images/stats.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    {% endblock %}
+
     .stats-container {
         max-width: 800px;
         margin: 30px auto;

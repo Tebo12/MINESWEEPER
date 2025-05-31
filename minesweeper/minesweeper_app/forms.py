@@ -3,11 +3,25 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 
+
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(required=True, label='почта')
+
     class Meta:
         model = CustomUser
         fields = ("username", "email", "password1", "password2")
+        labels = {
+            "username": 'логин',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = ''
+        self.fields['password1'].help_text = ''
+        self.fields['password2'].help_text = ''
+        # Меняем label для паролей
+        self.fields['password1'].label = 'пароль'
+        self.fields['password2'].label = 'повтор'
 
     def clean(self):
         cleaned_data = super().clean()
