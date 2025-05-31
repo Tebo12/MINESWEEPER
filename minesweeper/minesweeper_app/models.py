@@ -13,3 +13,4 @@ class Results(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     won = models.BooleanField(default=False)
     time = models.IntegerField(default=0)
+    
