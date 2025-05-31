@@ -1,6 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 
 class RegisterForm(UserCreationForm):
@@ -17,3 +17,15 @@ class RegisterForm(UserCreationForm):
             raise ValidationError("Пароли не совпадают")
         return cleaned_data
 
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label="Логин",
+        widget=forms.TextInput(attrs={'autofocus': True, 'placeholder': 'Логин'})
+    )
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'})
+    )
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data

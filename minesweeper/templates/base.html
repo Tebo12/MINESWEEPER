@@ -75,7 +75,11 @@
             {% block content %}
             <div class="button-container">
                 <button class="menu-button" onclick="window.location.href='{% url 'play' %}'">Играть</button>
+                {% if user.is_authenticated %}
                 <button class="menu-button" onclick="window.location.href='{% url 'login' %}'">Войти</button>
+                <button class="menu-button" onclick="window.location.href='{% url 'records' %}'">Рекорды</button>
+                {% else %}
+                <button class="menu-button" onclick="window.location.href='{% url 'stats' %}'">{user.username}</button>
                 <button class="menu-button" onclick="window.location.href='{% url 'records' %}'">Рекорды</button>
             </div>
             {% endblock %}
