@@ -1,83 +1,156 @@
 {% extends 'base.html' %}
 
-{% block header_title %}Вход в систему{% endblock %}
+{% block header_title %}Статистика{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <h2>Вход в аккаунт</h2>
+<div class="stats-container">
+    <h2>Ваша статистика</h2>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-value">{{ wins }}</div>
+            <div class="stat-label">Побед</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ losses }}</div>
+            <div class="stat-label">Поражений</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ cells_opened }}</div>
+            <div class="stat-label">Клеток открыто</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ flags_placed }}</div>
+            <div class="stat-label">Флагов поставлено</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ hours_played|floatformat:1 }}</div>
+            <div class="stat-label">Часов сыграно</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ win_rate }}%</div>
+            <div class="stat-label">Процент побед</div>
+        </div>
+    </div>
 
-    <form method="post" class="auth-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="auth-button">Войти</button>
-    </form>
-
-    <div class="auth-links">
-        <p>Вы еще не зарегистрированы? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+    <div class="logout-container">
+        <a href="{% url '' %}" class="logout-btn" onclick="return confirm('Вы уверены, что хотите выйти?')">
+            Выйти из аккаунта
+        </a>
     </div>
 </div>
 
 <style>
-
-    .auth-container {
-        max-width: 400px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: rgba(0, 0, 0, 0.7);
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    .stats-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
     }
 
-    .auth-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+    .stats-container h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 30px;
+        font-size: 2rem;
     }
 
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 30px;
     }
 
-    .form-group label {
-        font-size: 16px;
+    .stat-item {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 25px 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .form-group input {
-        padding: 10px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        background-color: rgba(255, 255, 255, 0.9);
+    .stat-item:hover {
+        transform: translateY(-5px);
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
-    .auth-button {
-        padding: 12px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
+    .stat-value {
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .auth-button:hover {
-        background-color: #45a049;
+    .stat-label {
+        font-size: 1.1rem;
+        color: #ddd;
+        letter-spacing: 0.5px;
     }
 
-    .auth-links {
-        margin-top: 15px;
+    .logout-container {
+        margin-top: 50px;
         text-align: center;
     }
 
-    .auth-links a {
-        color: #4CAF50;
+    .logout-btn {
+        display: inline-block;
+        padding: 14px 35px;
+        background-color: #f44336;
+        color: white;
         text-decoration: none;
+        font-weight: bold;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: none;
+        cursor: pointer;
     }
 
-    .auth-links a:hover {
-        text-decoration: underline;
+    .logout-btn:hover {
+        background-color: #d32f2f;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .logout-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            padding: 20px 15px;
+        }
+
+        .stat-value {
+            font-size: 2.2rem;
+        }
+
+        .logout-btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-container {
+            padding: 20px 15px;
+        }
     }
 </style>
 {% endblock %}

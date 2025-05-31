@@ -3,6 +3,82 @@
 {% block header_title %}Статистика{% endblock %}
 
 {% block content %}
+<div class="stats-container">
+    <h2>Ваша статистика</h2>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-value">{{ wins }}</div>
+            <div class="stat-label">Побед</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ losses }}</div>
+            <div class="stat-label">Поражений</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ cells_opened }}</div>
+            <div class="stat-label">Клеток открыто</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ flags_placed }}</div>
+            <div class="stat-label">Флагов поставлено</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ hours_played|floatformat:1 }}</div>
+            <div class="stat-label">Часов сыграно</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ win_rate }}%</div>
+            <div class="stat-label">Процент побед</div>
+        </div>
+    </div>
+</div>
 
+<style>
+    .stats-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
 
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .stat-item {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .stat-item:hover {
+        transform: translateY(-5px);
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #4CAF50;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        color: #ddd;
+    }
+
+    @media (max-width: 600px) {
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+</style>
 {% endblock %}
