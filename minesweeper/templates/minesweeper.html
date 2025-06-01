@@ -14,7 +14,8 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="minesweeper-board">
+    <div class="minesweeper-board" id="game-board"
+         data-boom="{{ boom|yesno:'true,false' }}" data-win="{{ win|yesno:'true,false' }}">
         {% if boom %}
             <div class="game-container">
                 <div class="game-message">
@@ -47,9 +48,29 @@
                 {% endfor %}
             </div>
         {% endif %}
+        {% if not user.is_authenticated %}
+        <div class="game-message">
+            Войдите чтобы результы сохранялись
+        </div>
+        {% endif %}
     </div>
 </div>
+    <div class="timer" id="timer">
+        00:00:00
+    </div>
 <style>
+    .timer {
+        position: fixed;
+        bottom: 130px;
+        left: 240px;
+        font-size: 50px;
+        color: white;
+        background-color:
+        rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+    }
+
     .minesweeper-table {
         display: inline-block;
         border: 2px solid #333;
@@ -111,12 +132,52 @@
 </style>
 
 <script>
+    let seconds = 0;
+    let timerInterval;
+    let timerStarted = false;
+    let boom = false
+    let win = false
+
+
     document.addEventListener('DOMContentLoaded', addCellEventListeners);
+
+    function game_state_reader(doc) {
+        const gameBoard = doc.getElementById('game-board');
+        boom = gameBoard.dataset.boom;
+        win = gameBoard.dataset.win;
+    }
+
+    function startTimer() {
+        if (!timerStarted) {
+            timerInterval = setInterval(updateTimer, 1000);
+            timerStarted = true;
+        }
+    }
+
+    function updateTimer() {
+        console.log(boom,win);
+        if (boom == win) {
+            seconds++;
+            const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const minutes = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = hours + ':' + minutes + ':' + secs;
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        seconds = 0;
+        document.getElementById('timer').textContent = '00:00:00';
+        timerStarted = false;
+    }
 
     function addCellEventListeners() {
         document.querySelectorAll('.minesweeper-cell:not(.revealed)').forEach(cell => {
             cell.addEventListener('click', handleCellClick);
             cell.addEventListener('contextmenu', right_click_func);
+            cell.addEventListener('click', startTimer);
+            cell.addEventListener('contextmenu', startTimer);
         });
     };
 
@@ -124,11 +185,12 @@
         const x = this.dataset.x;
         const y = this.dataset.y;
         console.log(`координаты: (${x}, ${y})`);
-        fetch('?x=' + x + '' + '&y=' + y)
+        fetch('?x=' + x + '' + '&y=' + y + '&time=' + seconds)
         .then(response => response.text())
         .then(html => {
              const parser = new DOMParser();
              const doc = parser.parseFromString(html, 'text/html');
+             game_state_reader(doc);
              document.querySelector('.minesweeper-board').innerHTML = doc.querySelector('.minesweeper-board').innerHTML;
              addCellEventListeners();
         })
@@ -139,22 +201,25 @@
         const x = this.dataset.x;
         const y = this.dataset.y;
         console.log(`координаты: (${x}, ${y})`);
-        fetch('?x=' + x + '' + '&y=' + y + '&rightClick=True')
+        fetch('?x=' + x + '' + '&y=' + y + '&rightClick=True' + '&time=' + seconds)
         .then(response => response.text())
         .then(html => {
              const parser = new DOMParser();
              const doc = parser.parseFromString(html, 'text/html');
+             game_state_reader(doc);
              document.querySelector('.minesweeper-board').innerHTML = doc.querySelector('.minesweeper-board').innerHTML;
              addCellEventListeners();
         })
     };
 
     function restartGame() {
-        fetch('?restart=True')
+        resetTimer();
+        fetch('?restart=True' + '&time=' + seconds)
         .then(response => response.text())
         .then(html => {
              const parser = new DOMParser();
              const doc = parser.parseFromString(html, 'text/html');
+             game_state_reader(doc);
              document.querySelector('.minesweeper-board').innerHTML = doc.querySelector('.minesweeper-board').innerHTML;
              addCellEventListeners();
         })

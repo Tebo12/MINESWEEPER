@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -9,6 +11,8 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from random import randint
+from .models import Results
+from django.contrib.auth import get_user_model
 
 
 # Create your views here.
@@ -17,17 +21,20 @@ def homePageView(request):
 
 
 def play(request):
-    a = 10
-    b = 10
-    bombs = 5
+    a = 5
+    b = 5
+    bombs = 2
 
-    titles_to_win = a*b-bombs
+    titles_to_win = a * b - bombs
 
     opened_titles = request.session.get('opened_titles', 0)
     field = request.session.get('field', field_generation(a, b, bombs))
     player_view = request.session.get('player_view', player_view_generation(a, b))
     boom = False
     win = False
+
+    title_open = 0
+    flag_set = 0
 
     if restart := request.GET.get('restart'):
         field = field_generation(a, b, bombs)
@@ -43,28 +50,42 @@ def play(request):
                     else:
                         if player_view[int(x)][int(y)] == '':
                             player_view[int(x)][int(y)] = 'X'
+                            flag_set = 1
+
                 else:
                     if player_view[int(x)][int(y)] == '':
                         opened_titles += 1
                         player_view[int(x)][int(y)] = field[int(x)][int(y)]
+                        title_open = 1
                     if field[int(x)][int(y)] == -1:
                         boom = True
+                        title_open = 1
                         field = field_generation(a, b, bombs)
                         player_view = player_view_generation(a, b)
+        else:
+            field = field_generation(a, b, bombs)
+            player_view = player_view_generation(a, b)
+            opened_titles = 0
 
     request.session['field'] = field
     request.session['player_view'] = player_view
     request.session['opened_titles'] = opened_titles
-    """
-        for l in player_view:
-        print(l)
-    """
+
     if opened_titles >= titles_to_win and not boom:
         win = True
+    if request.user.is_authenticated:
+        user_model = get_user_model()
+        user = user_model.objects.get(id=request.user.id)
+        if boom or win:
+            if time := int(request.GET.get('time')):
+                record = Results(user=user, won=win, time=time)
+                record.save()
+        user.number_of_titles += title_open
+        user.number_of_flags += flag_set
+        user.save(update_fields=["number_of_titles", "number_of_flags"])
 
-    print(titles_to_win)
-    print(opened_titles)
-    return render(request, 'minesweeper.html', {'player_view': player_view, 'boom': boom, 'win':win})
+    return render(request, 'minesweeper.html', {'player_view': player_view,
+                                                'boom': boom, 'win': win})
 
 
 def player_view_generation(a, b):
@@ -134,7 +155,28 @@ def records(request):
 
 @login_required
 def stats(request):
-    return render(request, 'stats.html')
+    user_model = get_user_model()
+    user = user_model.objects.get(id=request.user.id)
+    cells_opened = user.number_of_titles
+    flags_placed = user.number_of_flags
+
+    wins = 0
+    losses = 0
+    hours_played = 0
+
+    results = list(Results.objects.filter(user=user))
+    for obj in results:
+        if obj.won:
+            wins += 1
+        else:
+            losses += 1
+        hours_played += obj.time / 3600
+
+    win_rate = wins/(wins+losses) * 100
+    return render(request, 'stats.html', {'wins': wins, 'losses': losses,
+                                          'cells_opened': cells_opened, 'flags_placed': flags_placed,
+                                          'hours_played': hours_played, 'win_rate': win_rate
+                                          })
 
 
 @login_required
