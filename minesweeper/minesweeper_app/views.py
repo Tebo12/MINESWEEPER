@@ -150,7 +150,26 @@ class RegisterView(CreateView):
 
 
 def records(request):
-    return render(request, 'records.html')
+    best = []
+    user_model = get_user_model()
+    user_list = list(user_model.objects.all())
+
+    for user in user_list:
+        wins = 0
+        time = float(0)
+        results = list(Results.objects.filter(user=user))
+        for obj in results:
+            if obj.won:
+                wins += 1
+            time += round((obj.time / 3600), 1)
+
+        best.append({'login': user.username, 'wins': wins, 'time': time})
+
+    best.sort(key=lambda i: i['wins'], reverse=True)
+    best = best[:10]
+    print(best)
+
+    return render(request, 'records.html', {'best': best})
 
 
 @login_required
