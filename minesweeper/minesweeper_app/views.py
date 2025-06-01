@@ -17,12 +17,12 @@ from django.contrib.auth import get_user_model
 
 # Create your views here.
 def homePageView(request):
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 
 def play(request):
-    a = 5
-    b = 5
+    a = 20
+    b = 20
     bombs = 2
 
     titles_to_win = a * b - bombs
@@ -168,7 +168,6 @@ def records(request):
     best.sort(key=lambda i: i['wins'], reverse=True)
     best = best[:10]
     print(best)
-
     return render(request, 'records.html', {'best': best})
 
 
@@ -191,7 +190,10 @@ def stats(request):
             losses += 1
         hours_played += obj.time / 3600
 
-    win_rate = wins/(wins+losses) * 100
+    if wins+losses != 0:
+        win_rate = wins/(wins+losses) * 100
+    else:
+        win_rate = 0
     return render(request, 'stats.html', {'wins': wins, 'losses': losses,
                                           'cells_opened': cells_opened, 'flags_placed': flags_placed,
                                           'hours_played': hours_played, 'win_rate': win_rate

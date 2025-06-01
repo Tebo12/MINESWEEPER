@@ -14,23 +14,21 @@
                 <tr>
                     <th>#</th>
                     <th>Логин</th>
-                    <th>Режим</th>
-                    <th>Рекорд</th>
-                    <th>Дата</th>
+                    <th>Побед</th>
+                    <th>Время игры</th>
                 </tr>
             </thead>
             <tbody>
-                {% for player in top_players %}
+                {% for player in best %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ player.username }}</td>
-                    <td>{{ player.get_game_mode_display }}</td>
-                    <td>{{ player.high_score }}</td>
-                    <td>{{ player.record_date|date:"d.m.Y" }}</td>
+                    <td>{{ player.login }}</td>
+                    <td>{{ player.wins }}</td>
+                    <td>{{ player.time }}</td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="empty-message">Нет данных о рекордах</td>
+                    <td colspan="4" class="empty-message">Нет данных о рекордах</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -42,7 +40,6 @@
     {% block background_style %}
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-
             url('{% static "images/best.jpg" %}') no-repeat center center fixed;
             background-size: cover;
         }
