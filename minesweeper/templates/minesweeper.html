@@ -54,14 +54,29 @@
         </div>
         {% endif %}
     </div>
-</div>
     <div class="timer" id="timer">
         00:00:00
     </div>
+    <div class="booms-count">
+        💣: {{ bombs_count }}
+    </div>
+</div>
 <style>
+    .booms-count {
+        position: fixed;
+        top: 130px;
+        right: 240px;
+        font-size: 50px;
+        color: white;
+        background-color:
+        rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 5px;
+    }
+
     .timer {
         position: fixed;
-        bottom: 130px;
+        top: 130px;
         left: 240px;
         font-size: 50px;
         color: white;
@@ -155,7 +170,6 @@
     }
 
     function updateTimer() {
-        console.log(boom,win);
         if (boom == win) {
             seconds++;
             const hours = Math.floor(seconds / 3600).toString().padStart(2, '0');
@@ -184,7 +198,6 @@
     function handleCellClick() {
         const x = this.dataset.x;
         const y = this.dataset.y;
-        console.log(`координаты: (${x}, ${y})`);
         fetch('?x=' + x + '' + '&y=' + y + '&time=' + seconds)
         .then(response => response.text())
         .then(html => {
@@ -200,7 +213,6 @@
         e.preventDefault();
         const x = this.dataset.x;
         const y = this.dataset.y;
-        console.log(`координаты: (${x}, ${y})`);
         fetch('?x=' + x + '' + '&y=' + y + '&rightClick=True' + '&time=' + seconds)
         .then(response => response.text())
         .then(html => {

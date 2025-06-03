@@ -85,7 +85,7 @@ def play(request):
         user.save(update_fields=["number_of_titles", "number_of_flags"])
 
     return render(request, 'minesweeper.html', {'player_view': player_view,
-                                                'boom': boom, 'win': win})
+                                                'boom': boom, 'win': win, 'bombs_count': bombs})
 
 
 def player_view_generation(a, b):

@@ -23,7 +23,6 @@ class RegisterForm(UserCreationForm):
         self.fields['password1'].label = 'пароль'
         self.fields['password2'].label = 'повтор'
         for field in ['password1', 'password2']:
-            print(self.fields[field].error_messages)
             self.fields[field].error_messages = {
                 'password_too_common': 'Этот пароль слишком простой!',
             }

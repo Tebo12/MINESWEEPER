@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
-# Create your models here.
 class CustomUser(AbstractUser):
     number_of_titles = models.IntegerField(default=0)
     number_of_flags = models.IntegerField(default=0)
