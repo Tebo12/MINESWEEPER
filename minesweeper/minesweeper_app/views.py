@@ -23,7 +23,7 @@ def homePageView(request):
 def play(request):
     a = 20
     b = 20
-    bombs = 2
+    bombs = 5
 
     titles_to_win = a * b - bombs
 
