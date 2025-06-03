@@ -167,7 +167,6 @@ def records(request):
 
     best.sort(key=lambda i: i['wins'], reverse=True)
     best = best[:10]
-    print(best)
     return render(request, 'records.html', {'best': best})
 
 
