@@ -1,8 +1,3 @@
-import datetime
-
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -137,7 +132,7 @@ class LoginView(View):
             )
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Redirect to your home page
+                return redirect('home')
             message = 'Не удалось войти'
             return render(request, self.template_name, context={'form': form, 'message': message})
         return render(request, self.template_name, context={'form': form, 'message': 'Неверная форма'})

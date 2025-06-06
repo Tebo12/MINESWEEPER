@@ -1,6 +1,5 @@
 from django import forms
-from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
 
@@ -36,11 +35,6 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].label = 'повтор пароля'
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput, label='логин')
     password = forms.CharField(widget=forms.PasswordInput, label='пароль')
-
-    error_messages = {
-        'invalid_login': "Неверный логин или пароль",
-        'inactive': "Этот аккаунт неактивен",
-    }
